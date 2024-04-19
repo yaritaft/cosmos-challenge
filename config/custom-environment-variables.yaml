@@ -1,0 +1,4 @@
+port: PORT
+
+crossmintAPI:
+  baseUrl: CROSSMINT_URL
