@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CosmosRepository } from '../repositories/cosmos.repository';
-import { ElementMappper } from '../mappers/cosmos.mapper';
+import { MegaversesRepository } from '../repositories/megaverses.repository';
+import { ElementMappper } from '../mappers/megaverses.mapper';
 import { ElementType } from '../../core/clients/crossmint/dtos/elementType.type';
 import { CrossmintColor } from '../../core/clients/crossmint/dtos/createSoloon.dto';
 import { CrossmintDirection } from '../../core/clients/crossmint/dtos/createCometh.dto';
@@ -14,8 +14,8 @@ interface CreateMethod {
 }
 
 @Injectable()
-export class CosmosService {
-  constructor(private readonly cosmosRepository: CosmosRepository) {}
+export class MegaversesService {
+  constructor(private readonly cosmosRepository: MegaversesRepository) {}
 
   createMethodMap: Record<
     ElementType,

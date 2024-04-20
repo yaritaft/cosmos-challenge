@@ -1,16 +1,16 @@
 import { Body, Controller, Post, UseGuards, Version } from '@nestjs/common';
-import { CosmosService } from '../services/cosmos.service';
+import { MegaversesService } from '../services/megaverses.service';
 import { SolveMapRequest } from '../dtos/solveMap.dto';
 import { ApiTags, ApiOperation, ApiBasicAuth } from '@nestjs/swagger';
 // import { WipeMapRequest } from '../dtos/wipeMap.dto';
 import { ApiKeyGuard } from '../../authGuard';
 
-@Controller('/cosmos')
+@Controller('/megaverses')
 @ApiBasicAuth('api-key')
 @UseGuards(ApiKeyGuard)
-@ApiTags('Cosmos')
-export class CosmosController {
-  constructor(private readonly cosmosService: CosmosService) {}
+@ApiTags('Megaverses')
+export class MegaverseController {
+  constructor(private readonly megaversesService: MegaversesService) {}
 
   @Version('1')
   @ApiBasicAuth('api-key')
@@ -20,11 +20,11 @@ export class CosmosController {
       'This endpoint is going to create the megaverse for a given candidate id on the payload.',
   })
   solveMap(@Body() { candidateId }: SolveMapRequest): Promise<void> {
-    return this.cosmosService.solveMap(candidateId);
+    return this.megaversesService.solveMap(candidateId);
   }
 
   //   @Delete()
   //   wipeMapPoly(@Body() { candidateId }: WipeMapRequest): Promise<void> {
-  //     return this.cosmosService.wipeMap(candidateId);
+  //     return this.megaversesService.wipeMap(candidateId);
   //   }
 }
