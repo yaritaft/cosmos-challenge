@@ -1,161 +1,134 @@
 import { HttpService } from '@nestjs/axios';
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { crossmintAPI as crossmintAPIConfig } from 'config';
 import { firstValueFrom } from 'rxjs';
+import { CreateComethRequest } from './dtos/createCometh.dto';
+import { CreateSoloonRequest } from './dtos/createSoloon.dto';
+import { ErasePolyanetRequest } from './dtos/erasePolyanet.dto';
+import { EraseComethRequest } from './dtos/eraseCometh.dto';
+import { EraseSoloonRequest } from './dtos/eraseSoloon.dto';
+import { CreatePolyanetRequest } from './dtos/createPolyanet.dto';
+import { GetGoalMapRequest, GetGoalMapResponse } from './dtos/getGoalMap.dto';
+import {
+  GetCurrentMapRequest,
+  GetCurrentMapResponse,
+} from './dtos/getCurrentMap.dto';
 
 @Injectable()
 export class CrossmintClient {
   private baseUrl: string = crossmintAPIConfig.baseUrl;
   constructor(private readonly httpService: HttpService) {}
 
-  async createPolyanet() {
+  async createPolyanet(createPolyanetRequest: CreatePolyanetRequest) {
     try {
-      await this.httpService
-        .post(`${this.baseUrl}$/polyanets`, {
-          candidateId,
-          row,
-          column,
-          color,
-          direction,
-        })
-        .toPromise();
+      const call$ = this.httpService.post<void>(
+        `${this.baseUrl}$/polyanets`,
+        createPolyanetRequest,
+      );
+
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async createCometh() {
+  async createCometh(createComethRequest: CreateComethRequest) {
     try {
-      await this.httpService
-        .post(`${this.baseUrl}/comeths`, {
-          candidateId,
-          row,
-          column,
-          color,
-          direction,
-        })
-        .toPromise();
+      const call$ = this.httpService.post<void>(`${this.baseUrl}/comeths`, {
+        createComethRequest,
+      });
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async createSoloon() {
+  async createSoloon(createSoloonRequest: CreateSoloonRequest) {
     try {
-      await this.httpService
-        .post(`${this.baseUrl}/soloons`, {
-          candidateId,
-          row,
-          column,
-          color,
-          direction,
-        })
-        .toPromise();
+      const call$ = this.httpService.post<void>(`${this.baseUrl}/soloons`, {
+        createSoloonRequest,
+      });
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async erasePolyanets() {
+  async erasePolyanets(erasePolyanetRequest: ErasePolyanetRequest) {
     try {
-      const result = await this.httpService
-        .delete(`${this.baseUrl}/polyanets`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: {
-            candidateId,
-            row,
-            column,
-          },
-        })
-        .toPromise();
-
-      console.log(result);
+      const call$ = this.httpService.delete<void>(`${this.baseUrl}/polyanets`, {
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        data: {
+          erasePolyanetRequest,
+        },
+      });
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async eraseCometh() {
+  async eraseCometh(eraseComethRequest: EraseComethRequest) {
     try {
-      const result = await this.httpService
-        .delete(`${this.baseUrl}/comeths`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: {
-            candidateId,
-            row,
-            column,
-          },
-        })
-        .toPromise();
-
-      console.log(result);
+      const call$ = this.httpService.delete<void>(`${this.baseUrl}/comeths`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          eraseComethRequest,
+        },
+      });
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async eraseSoloon() {
+  async eraseSoloon(eraseSoloonRequest: EraseSoloonRequest) {
     try {
-      const result = await this.httpService
-        .delete(`${this.baseUrl}/soloons`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: {
-            candidateId,
-            row,
-            column,
-          },
-        })
-        .toPromise();
-
-      console.log(result);
+      const call$ = this.httpService.delete<void>(`${this.baseUrl}/soloons`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          eraseSoloonRequest,
+        },
+      });
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async getGoal() {
+  async getGoal(getGoalMapRequest: GetGoalMapRequest) {
     try {
-      const result = await this.httpService
-        .get(`${this.baseUrl}/map/${candidateId}/goal,`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: {
-            candidateId,
-            row,
-            column,
-          },
-        })
-        .toPromise();
-
-      console.log(result);
+      const call$ = this.httpService.get<GetGoalMapResponse>(
+        `${this.baseUrl}/map/${getGoalMapRequest.candidateId}/goal,`,
+      );
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async getCurrentMap() {
+  async getCurrentMap(
+    getCurrentMapRequest: GetCurrentMapRequest,
+  ): Promise<GetCurrentMapResponse> {
     try {
-      const result = await this.httpService
-        .get(`${this.baseUrl}/map/${candidateId},`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: {
-            candidateId,
-            row,
-            column,
-          },
-        })
-        .toPromise();
-
-      console.log(result);
+      const call$ = this.httpService.get<GetCurrentMapResponse>(
+        `${this.baseUrl}/map/${getCurrentMapRequest.candidateId},`,
+      );
+      const { data } = await firstValueFrom(call$);
+      return data;
     } catch (error) {
       console.log(error);
     }
