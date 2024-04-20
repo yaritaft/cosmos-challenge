@@ -7,15 +7,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setDescription(
+      'This API can create megaverses according to the goal and wipe them automatically.',
+    )
     .setVersion('1.0')
-    .addTag('cats')
+    .addApiKey({ type: 'apiKey', name: 'api-key', in: 'header' }, 'api-key')
     .build();
   app.enableVersioning({
     type: VersioningType.URI,
   });
   const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
