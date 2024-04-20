@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 // import { AppService } from './app.service';
 // import { AxiosRetryModule } from 'nestjs-axios-retry';
 // import axiosRetry from 'axios-retry';
-import { CosmosModule } from './cosmos/cosmos.module';
+import { MegaversesModule } from './megaverses/megaverses.module';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { CosmosModule } from './cosmos/cosmos.module';
     //     },
     //   },
     // }), // TODO: ERASE THIS ONCE WE VALIDATE NEW CODE IS WORKING
-    CosmosModule,
+    MegaversesModule,
   ],
   // controllers: [AppController], // TODO: ERASE THIS ONCE WE VALIDATE NEW CODE IS WORKING
   // providers: [AppService], // TODO: ERASE THIS ONCE WE VALIDATE NEW CODE IS WORKING
