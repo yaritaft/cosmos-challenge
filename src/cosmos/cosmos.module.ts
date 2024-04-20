@@ -1,24 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AxiosRetryModule } from 'nestjs-axios-retry';
-import axiosRetry from 'axios-retry';
+import { CoreModule } from '../core/core.module';
+import { CosmosController } from './controllers/cosmos.controller';
+import { CosmosService } from './services/cosmos.service';
+import { CosmosRepository } from './repositories/cosmos.repository';
 
 @Module({
-  imports: [
-    AxiosRetryModule.forRoot({
-      axiosRetryConfig: {
-        retries: 7,
-        retryDelay: axiosRetry.exponentialDelay,
-        shouldResetTimeout: true,
-        retryCondition: (error) => error.response.status === 429,
-        onRetry: (retryCount) => {
-          console.log(`Retrying request attempt ${retryCount}`);
-        },
-      },
-    }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [CoreModule],
+  controllers: [CosmosController],
+  providers: [CoreModule, CosmosRepository, CosmosService],
 })
 export class CosmosModule {}

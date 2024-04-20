@@ -1,13 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Version } from '@nestjs/common';
 import { CosmosService } from '../services/cosmos.service';
 import { SolveMapRequest } from '../dtos/solveMap.dto';
 // import { WipeMapRequest } from '../dtos/wipeMap.dto';
 
-@Controller()
+@Controller('/cosmos')
 export class CosmosController {
   constructor(private readonly cosmosService: CosmosService) {}
 
-  @Post()
+  @Version('1')
+  @Post('/solveMap')
   solveMap(@Body() { candidateId }: SolveMapRequest): Promise<void> {
     return this.cosmosService.solveMap(candidateId);
   }

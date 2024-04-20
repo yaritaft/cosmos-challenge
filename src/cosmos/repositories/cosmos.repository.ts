@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CrossmintClient } from '../../core/clients/crossmint/crossmint';
+import { CrossmintClient } from '../../core/clients/crossmint/crossmint.client';
 import { EraseSoloonRequest } from '../../core/clients/crossmint/dtos/eraseSoloon.dto';
 import { EraseComethRequest } from '../../core/clients/crossmint/dtos/eraseCometh.dto';
 import { ErasePolyanetRequest } from '../../core/clients/crossmint/dtos/erasePolyanet.dto';

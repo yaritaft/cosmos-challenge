@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AxiosRetryModule } from 'nestjs-axios-retry';
 import axiosRetry from 'axios-retry';
-import { CosmosModule } from './cosmos/cosmos.module';
+import { CrossmintClient } from './crossmint/crossmint.client';
 
 @Module({
   imports: [
@@ -18,9 +16,8 @@ import { CosmosModule } from './cosmos/cosmos.module';
         },
       },
     }),
-    CosmosModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [CrossmintClient],
+  exports: [CrossmintClient],
 })
-export class AppModule {}
+export class ClientModule {}
