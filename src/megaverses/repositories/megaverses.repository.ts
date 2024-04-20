@@ -16,7 +16,7 @@ import {
 import { CreatePolyanetRequest } from '../../core/clients/crossmint/dtos/createPolyanet.dto';
 
 @Injectable()
-export class CosmosRepository {
+export class MegaversesRepository {
   constructor(private readonly crossmintClient: CrossmintClient) {}
 
   createPolyanet(createPolyanetRequest: CreatePolyanetRequest): Promise<void> {
