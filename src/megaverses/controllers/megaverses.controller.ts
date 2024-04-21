@@ -29,9 +29,4 @@ export class MegaverseController {
   solveMap(@Body() { candidateId }: SolveMapRequest): Promise<void> {
     return this.megaversesService.solveMap(candidateId);
   }
-
-  @Delete()
-  wipeMapPoly(@Body() { candidateId }: WipeMapRequest): Promise<void> {
-    return this.megaversesService.wipeMap(candidateId);
-  }
 }

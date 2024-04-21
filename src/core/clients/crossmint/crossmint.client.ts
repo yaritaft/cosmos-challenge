@@ -14,6 +14,10 @@ import {
   GetCurrentMapResponse,
 } from './dtos/getCurrentMap.dto';
 
+const handleError = (error: any) => {
+  throw error;
+};
+
 @Injectable()
 export class CrossmintClient {
   private baseUrl: string = crossmintAPIConfig.baseUrl;
@@ -29,7 +33,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -41,7 +45,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -53,7 +57,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -70,7 +74,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -87,7 +91,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -104,7 +108,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -116,7 +120,7 @@ export class CrossmintClient {
       const response = await firstValueFrom(call$);
       return response.data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -130,7 +134,7 @@ export class CrossmintClient {
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 }

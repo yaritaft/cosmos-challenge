@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AxiosRetryModule } from 'nestjs-axios-retry';
 import axiosRetry from 'axios-retry';
 import { CrossmintClient } from './crossmint/crossmint.client';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CrossmintClient } from './crossmint/crossmint.client';
         },
       },
     }),
+    HttpModule,
   ],
   providers: [CrossmintClient],
   exports: [CrossmintClient],
