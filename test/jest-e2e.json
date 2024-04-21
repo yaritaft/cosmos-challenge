@@ -3,6 +3,8 @@
   "rootDir": "..",
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
+  "modulePathIgnorePatterns": ["./test/helpers/*"],
+  "coveragePathIgnorePatterns": ["./test/helpers"],
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }
