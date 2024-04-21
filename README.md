@@ -9,7 +9,6 @@ You have to create an automatic way of creating megaverses and wipe them out. Wi
 ### Badges
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master)
-[![Coverage Status](https://coveralls.io/repos/github/yaritaft/cosmos-challenge/badge.svg?branch=master)](https://coveralls.io/github/yaritaft/cosmos-challenge?branch=master)
 
 ### Decisions taken
 
