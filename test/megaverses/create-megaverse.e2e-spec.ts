@@ -4,20 +4,16 @@ import { HttpMockBuilder } from '../helpers/http-mock.helper.test';
 import { HttpService } from '@nestjs/axios';
 import { apiKey } from 'config';
 import { AppMockHelper } from '../helpers/app-helper.test';
-import { CrossmintClient } from '../../src/core/clients/crossmint/crossmint.client';
 import { of } from 'rxjs';
-import { AxiosResponse } from 'axios';
 
 describe('Create Megaverses (e2e)', () => {
   let app: INestApplication;
   let mockHelper: HttpMockBuilder;
   let httpService: HttpService;
-  let crossmintClient: CrossmintClient;
 
   beforeEach(async () => {
     app = await AppMockHelper.createApp();
     mockHelper = new HttpMockBuilder(app.get(HttpService));
-    crossmintClient = app.get(CrossmintClient);
     httpService = app.get(HttpService);
 
     await app.init();
@@ -27,7 +23,7 @@ describe('Create Megaverses (e2e)', () => {
 
     it('401: / (POST) Unauthorized attempt. With no API KEY.', () => {
       return request(app.getHttpServer())
-        .post('/megaverses/')
+        .post('/v1/megaverses')
         .expect(401)
         .expect({
           message: 'API key is missing.',
@@ -38,7 +34,7 @@ describe('Create Megaverses (e2e)', () => {
 
     it('401: / (POST) Unauthorized attempt. With wrong API KEY.', () => {
       return request(app.getHttpServer())
-        .post('/megaverses/')
+        .post('/v1/megaverses')
         .set({ 'api-key': 'WRONT_API_KEY' })
         .expect(401)
         .expect({
@@ -52,7 +48,7 @@ describe('Create Megaverses (e2e)', () => {
       mockHelper.addGetMock(`/map/${candidateId}/goal`, {}, true, 500, 'aa');
 
       return request(app.getHttpServer())
-        .post('/megaverses')
+        .post('/v1/megaverses')
         .set({ 'api-key': apiKey })
         .expect(500);
     });
@@ -65,59 +61,14 @@ describe('Create Megaverses (e2e)', () => {
     //     .expect('Hello World!');
     // });
 
-    it.only('201: / (POST) Succesfully create a megaverse', async () => {
+    it('201: / (POST) Succesfully create a megaverse', async () => {
       // RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
       // Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
       // [P S S ]
       // [S RC S ]
       // [S S PSO ]
 
-      // mockHelper.addGetMock(
-      //   `/map/${candidateId}/goal`,
-      //   {
-      //     data: {
-      //       goal: [
-      //         ['POLYANET', 'SPACE', 'SPACE'],
-      //         ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-      //         ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-      //       ],
-      //     },
-      //     status: 200,
-      //   },
-      //   false,
-      //   200,
-      //   '',
-      //   { headers: { 'api-key': apiKey } },
-      // );
-
-      //   {}, //   { row: '1', column: '1', direction: 'right', candidateId }, //   `/comeths`, // mockHelper.addPostMock(
-      //   false,
-      //   201,
-      // );
-      // mockHelper.addPostMock(
-      //   `/soloons`,
-      //   { row: '2', column: '2', color: 'purple', candidateId },
-      //   {},
-      //   false,
-      //   201,
-      // );
-      // mockHelper.addPostMock(
-      //   `/polyanets`,
-      //   { row: '0', column: '0', candidateId },
-      //   {},
-      //   false,
-      //   201,
-      // );
-
-      // mockHelper.build();
-
-      // jest
-      //   .spyOn(httpService, 'get')
-      //   .mockImplementation((url: string, config?: any): any => {
-      //     console.error(url, config);
-      //     console.error('YARI');
-      //   });
-      const response: any = {
+      const response = {
         data: {
           goal: [
             ['POLYANET', 'SPACE', 'SPACE'],
@@ -125,7 +76,7 @@ describe('Create Megaverses (e2e)', () => {
             ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
           ],
         },
-        config: { url: 'http://localhost:3000/mockUrl' } as any,
+        config: {} as any,
         status: 200,
         statusText: 'OK',
       };
@@ -134,27 +85,7 @@ describe('Create Megaverses (e2e)', () => {
         .mockReturnValue(of(response) as never);
       const createElement = jest
         .spyOn(httpService, 'post')
-        .mockReturnValue(of(response) as never);
-
-      // jest.spyOn(crossmintClient, 'createSoloon').mockResolvedValue({
-      //   goal: [
-      //     ['POLYANET', 'SPACE', 'SPACE'],
-      //     ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-      //     ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-      //   ],
-      // } as any);
-
-      // jest.spyOn(crossmintClient, 'createPolyanet').mockResolvedValue({
-      //   goal: [
-      //     ['POLYANET', 'SPACE', 'SPACE'],
-      //     ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-      //     ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-      //   ],
-      // } as any);
-
-      // jest
-      //   .spyOn(httpService, 'post')
-      //   .mockResolvedValue({ a: 4 } as unknown as never);
+        .mockReturnValue(of({}) as never);
 
       await request(app.getHttpServer())
         .post('/v1/megaverses')
@@ -163,11 +94,24 @@ describe('Create Megaverses (e2e)', () => {
         .expect(201);
 
       expect(createElement).toHaveBeenCalledTimes(3);
-      expect(createElement).toHaveBeenCalledWith('/polyanets', {
+      expect(createElement).toHaveBeenNthCalledWith(1, '/polyanets', {
         row: '0',
         column: '0',
         candidateId,
       });
+      expect(createElement).toHaveBeenNthCalledWith(2, '/comeths', {
+        row: '1',
+        column: '1',
+        candidateId,
+        direction: 'right',
+      });
+      expect(createElement).toHaveBeenNthCalledWith(3, '/soloons', {
+        row: '2',
+        column: '2',
+        candidateId,
+        color: 'purple',
+      });
+
       expect(getGoal).toHaveBeenCalledTimes(1);
     });
   });

@@ -39,9 +39,10 @@ export class CrossmintClient {
 
   async createCometh(createComethRequest: CreateComethRequest) {
     try {
-      const call$ = this.httpService.post<void>(`${this.baseUrl}/comeths`, {
+      const call$ = this.httpService.post<void>(
+        `${this.baseUrl}/comeths`,
         createComethRequest,
-      });
+      );
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {
@@ -51,9 +52,10 @@ export class CrossmintClient {
 
   async createSoloon(createSoloonRequest: CreateSoloonRequest) {
     try {
-      const call$ = this.httpService.post<void>(`${this.baseUrl}/soloons`, {
+      const call$ = this.httpService.post<void>(
+        `${this.baseUrl}/soloons`,
         createSoloonRequest,
-      });
+      );
       const { data } = await firstValueFrom(call$);
       return data;
     } catch (error) {

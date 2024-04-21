@@ -15,8 +15,8 @@ export class MegaversesService {
           continue;
         }
 
-        await this.cosmosRepository.createPolyanet({
-          // element: element as ValidElement,
+        await this.cosmosRepository.createElement({
+          element: element as ValidElement,
           candidateId,
           row,
           column,

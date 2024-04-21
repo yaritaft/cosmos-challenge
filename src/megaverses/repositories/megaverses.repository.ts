@@ -43,16 +43,6 @@ interface CreateElement {
 export class MegaversesRepository {
   constructor(private readonly crossmintClient: CrossmintClient) {}
 
-  createMethodMap: Record<
-    ElementType,
-    (createMethod: CreateMethod) => Promise<void> | undefined
-  > = {
-    [ElementType.COMETH]: this.createCometh,
-    [ElementType.POLYANET]: this.createPolyanet,
-    [ElementType.SOLOON]: this.createSoloon,
-    [ElementType.SPACE]: undefined,
-  };
-
   eraseMethodMap: Record<ElementType, ({}) => Promise<void> | undefined> = {
     [ElementType.COMETH]: this.createCometh,
     [ElementType.POLYANET]: this.createPolyanet,
@@ -60,19 +50,44 @@ export class MegaversesRepository {
     [ElementType.SPACE]: undefined,
   };
 
-  createElement({
+  async createElement({
     element,
     candidateId,
     row,
     column,
   }: CreateElement): Promise<void> {
     const { elementType, color, direction } = ElementMappper[element];
-    const createMethod: (createMethod: CreateMethod) => Promise<void> =
-      this.createMethodMap[elementType];
-    return createMethod({ color, direction, candidateId, row, column });
+    switch (elementType) {
+      case ElementType.POLYANET:
+        this.createPolyanet({
+          candidateId,
+          row,
+          column,
+        });
+        break;
+      case ElementType.COMETH:
+        await this.createCometh({
+          direction,
+          candidateId,
+          row,
+          column,
+        });
+        break;
+      case ElementType.SOLOON:
+        await this.createSoloon({
+          color,
+          candidateId,
+          row,
+          column,
+        });
+        break;
+      case ElementType.SPACE:
+        break;
+    }
+    // TODO: EXPLAIN THAT DOING THIS WITH AD ICT IS NOT POSSIBLE DUE TO TESTING PURPOSES
   }
 
-  createPolyanet(createPolyanetRequest: CreatePolyanetRequest): Promise<void> {
+  createPolyanet(createPolyanetRequest: CreateMethod): Promise<void> {
     return this.crossmintClient.createPolyanet(createPolyanetRequest);
   }
 
@@ -80,12 +95,16 @@ export class MegaversesRepository {
     return this.crossmintClient.getGoal(getGoalMapRequest);
   }
 
-  createCometh(createComethRequest: CreateComethRequest): Promise<void> {
-    return this.crossmintClient.createCometh(createComethRequest);
+  createCometh(createComethRequest: CreateMethod): Promise<void> {
+    return this.crossmintClient.createCometh(
+      createComethRequest as CreateComethRequest,
+    );
   }
 
-  createSoloon(createSoloonRequest: CreateSoloonRequest): Promise<void> {
-    return this.crossmintClient.createSoloon(createSoloonRequest);
+  createSoloon(createSoloonRequest: CreateMethod): Promise<void> {
+    return this.crossmintClient.createSoloon(
+      createSoloonRequest as CreateSoloonRequest,
+    );
   }
 
   erasePolyanets(erasePolyanetRequest: ErasePolyanetRequest): Promise<void> {
