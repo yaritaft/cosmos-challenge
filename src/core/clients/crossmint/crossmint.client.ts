@@ -66,12 +66,7 @@ export class CrossmintClient {
   async erasePolyanets(erasePolyanetRequest: ErasePolyanetRequest) {
     try {
       const call$ = this.httpService.delete<void>(`${this.baseUrl}/polyanets`, {
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-        data: {
-          erasePolyanetRequest,
-        },
+        data: erasePolyanetRequest,
       });
       const { data } = await firstValueFrom(call$);
       return data;
@@ -83,12 +78,7 @@ export class CrossmintClient {
   async eraseCometh(eraseComethRequest: EraseComethRequest) {
     try {
       const call$ = this.httpService.delete<void>(`${this.baseUrl}/comeths`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          eraseComethRequest,
-        },
+        data: eraseComethRequest,
       });
       const { data } = await firstValueFrom(call$);
       return data;
@@ -100,12 +90,7 @@ export class CrossmintClient {
   async eraseSoloon(eraseSoloonRequest: EraseSoloonRequest) {
     try {
       const call$ = this.httpService.delete<void>(`${this.baseUrl}/soloons`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          eraseSoloonRequest,
-        },
+        data: eraseSoloonRequest,
       });
       const { data } = await firstValueFrom(call$);
       return data;

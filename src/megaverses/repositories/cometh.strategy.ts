@@ -16,7 +16,7 @@ export class ComethsStrategy implements BaseElementStrategy {
   }
 
   erase(eraseElementRequest: EraseElement): Promise<void> {
-    return this.crossmintClient.eraseSoloon(
+    return this.crossmintClient.eraseCometh(
       eraseElementRequest as EraseComethRequest,
     );
   }

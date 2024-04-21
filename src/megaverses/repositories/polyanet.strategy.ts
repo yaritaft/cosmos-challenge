@@ -16,7 +16,7 @@ export class PolyametsStrategy implements BaseElementStrategy {
   }
 
   erase(eraseElementRequest: EraseElement): Promise<void> {
-    return this.crossmintClient.createPolyanet(
+    return this.crossmintClient.erasePolyanets(
       eraseElementRequest as ErasePolyanetRequest,
     );
   }
