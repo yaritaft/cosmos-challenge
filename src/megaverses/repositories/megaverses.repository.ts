@@ -23,6 +23,10 @@ export class MegaversesRepository {
     return this.crossmintClient.createPolyanet(createPolyanetRequest);
   }
 
+  getGoal(getGoalMapRequest: GetGoalMapRequest): Promise<GetGoalMapResponse> {
+    return this.crossmintClient.getGoal(getGoalMapRequest);
+  }
+
   createCometh(createComethRequest: CreateComethRequest): Promise<void> {
     return this.crossmintClient.createCometh(createComethRequest);
   }
@@ -41,10 +45,6 @@ export class MegaversesRepository {
 
   eraseSoloon(eraseSoloonRequest: EraseSoloonRequest): Promise<void> {
     return this.crossmintClient.eraseSoloon(eraseSoloonRequest);
-  }
-
-  getGoal(getGoalMapRequest: GetGoalMapRequest): Promise<GetGoalMapResponse> {
-    return this.crossmintClient.getGoal(getGoalMapRequest);
   }
 
   getCurrentMap(

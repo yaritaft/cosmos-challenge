@@ -1,4 +1,6 @@
 port: PORT
 
+apiKey: API_KEY
+
 crossmintAPI:
   baseUrl: CROSSMINT_URL

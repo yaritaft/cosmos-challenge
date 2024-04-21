@@ -22,7 +22,7 @@ export class CrossmintClient {
   async createPolyanet(createPolyanetRequest: CreatePolyanetRequest) {
     try {
       const call$ = this.httpService.post<void>(
-        `${this.baseUrl}$/polyanets`,
+        `${this.baseUrl}/polyanets`,
         createPolyanetRequest,
       );
 
@@ -113,8 +113,8 @@ export class CrossmintClient {
       const call$ = this.httpService.get<GetGoalMapResponse>(
         `${this.baseUrl}/map/${getGoalMapRequest.candidateId}/goal,`,
       );
-      const { data } = await firstValueFrom(call$);
-      return data;
+      const response = await firstValueFrom(call$);
+      return response.data;
     } catch (error) {
       console.log(error);
     }

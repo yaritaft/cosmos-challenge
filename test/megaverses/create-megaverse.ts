@@ -1,23 +1,32 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, VersioningType } from '@nestjs/common';
 import * as request from 'supertest';
 import { HttpMockBuilder } from '../helpers/http-mock.helper.test';
 import { HttpService } from '@nestjs/axios';
 import { apiKey } from 'config';
 import { AppMockHelper } from '../helpers/app-helper.test';
-import { CrossmintClient } from '../../src/core/clients/crossmint/crossmint.client';
+import { Test, TestingModule } from '@nestjs/testing';
+import { AppModule } from '../../src/app.module';
 
 describe('Create Megaverses (e2e)', () => {
   let app: INestApplication;
   let mockHelper: HttpMockBuilder;
-  let crossmintClient: CrossmintClient;
+  let httpService: HttpService;
 
   beforeEach(async () => {
-    app = await AppMockHelper.createApp();
-    mockHelper = new HttpMockBuilder(app.get(HttpService));
-    crossmintClient = app.get(CrossmintClient);
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
 
+    app = moduleFixture.createNestApplication();
+
+    app.enableVersioning({
+      type: VersioningType.URI,
+    });
+
+    httpService = app.get(HttpService);
     await app.init();
   });
+
   describe('Create Megaverses', () => {
     const candidateId = 'CANDIDATE_ID';
 
@@ -107,40 +116,14 @@ describe('Create Megaverses (e2e)', () => {
 
       // mockHelper.build();
 
-      // jest
-      //   .spyOn(httpService, 'get')
-      //   .mockImplementation((url: string, config?: any): any => {
-      //     console.error(url, config);
-      //     console.error('YARI');
-      //   });
-      jest.spyOn(crossmintClient, 'getGoal').mockResolvedValue({
-        goal: [
-          ['POLYANET', 'SPACE', 'SPACE'],
-          ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-          ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-        ],
-      });
-
-      jest.spyOn(crossmintClient, 'createSoloon').mockResolvedValue({
-        goal: [
-          ['POLYANET', 'SPACE', 'SPACE'],
-          ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-          ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-        ],
-      } as any);
-
-      jest.spyOn(crossmintClient, 'createPolyanet').mockResolvedValue({
-        goal: [
-          ['POLYANET', 'SPACE', 'SPACE'],
-          ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-          ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-        ],
-      } as any);
-
-      jest.spyOn(crossmintClient, 'createCometh').mockResolvedValue();
-
+      jest
+        .spyOn(httpService, 'get')
+        .mockImplementation((url: string, config?: any): any => {
+          console.error(url, config);
+          console.error('YARI');
+        });
       return request(app.getHttpServer())
-        .post('/v1/megaverses')
+        .post('/v1/megaverses/')
         .send({ candidateId })
         .set({ 'api-key': apiKey })
         .expect(201);

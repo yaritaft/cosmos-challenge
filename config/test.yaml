@@ -1,4 +1,6 @@
 port: 8080
 
+apiKey: 'apiKeyTest'
+
 crossmintAPI:
-  baseUrl: ''
+  baseUrl: 'localhost'

@@ -7,7 +7,6 @@ export class HttpMockBuilder {
   private getMocks: { [url: string]: any } = {};
   private deleteMocks: { [url: string]: any } = {};
   private postMocks: { [url: string]: any } = {};
-  private patchMocks: { [url: string]: any } = {};
 
   private _calledGetMocks: { [url: string]: number } = {};
   private _calledPostMocks: { [url: string]: number } = {};
@@ -85,41 +84,6 @@ export class HttpMockBuilder {
       };
     }
     this._calledPostMocks[url] = 0;
-  }
-
-  addPatchMock(
-    url: string,
-    body: any,
-    data: any,
-    isError = false,
-    status = 200,
-    statusText = '',
-  ) {
-    if (isError) {
-      this.patchMocks[url] = {
-        config: {},
-        code: status.toString(),
-        request: body,
-        response: {
-          data,
-          status,
-          statusText,
-          headers: {},
-          config: {},
-        },
-        isAxiosError: true,
-        toJSON: () => data,
-      } as AxiosError;
-    } else {
-      this.patchMocks[url] = {
-        request: body,
-        data,
-        status,
-        statusText,
-        headers: {},
-        config: {},
-      };
-    }
   }
 
   addDeleteMock(
@@ -227,26 +191,6 @@ export class HttpMockBuilder {
         }
 
         throw Error(`No Implementation for POST - ${url}`);
-      });
-
-    jest
-      .spyOn(this.httpService, 'patch')
-      .mockImplementation((url: string, body: any) => {
-        for (const mockUrl in this.patchMocks) {
-          if (
-            url.includes(mockUrl) &&
-            _.isMatch(body, this.patchMocks[mockUrl].request)
-          ) {
-            const response = this.patchMocks[mockUrl];
-            if (response.isAxiosError) {
-              throw response;
-            } else {
-              return of(this.patchMocks[mockUrl]);
-            }
-          }
-        }
-
-        throw Error(`No Implementation for PATCH - ${url}`);
       });
   }
 }

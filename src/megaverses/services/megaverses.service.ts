@@ -27,12 +27,12 @@ export class MegaversesService {
     [ElementType.SPACE]: undefined,
   };
 
-  //   eraseMethodMap: Record<ElementType, ({}) => Promise<void> | undefined> = {
-  //     [ElementType.COMETH]: this.cosmosRepository.createCometh,
-  //     [ElementType.POLYANET]: this.cosmosRepository.createPolyanet,
-  //     [ElementType.SOLOON]: this.cosmosRepository.createSoloon,
-  //     [ElementType.SPACE]: undefined,
-  //   };
+  eraseMethodMap: Record<ElementType, ({}) => Promise<void> | undefined> = {
+    [ElementType.COMETH]: this.cosmosRepository.createCometh,
+    [ElementType.POLYANET]: this.cosmosRepository.createPolyanet,
+    [ElementType.SOLOON]: this.cosmosRepository.createSoloon,
+    [ElementType.SPACE]: undefined,
+  };
 
   methodMapper(elementType: ElementType) {
     return this.createMethodMap[elementType];
@@ -50,26 +50,26 @@ export class MegaversesService {
         const { elementType, color, direction } = ElementMappper[value2];
         const createMethod: (createMethod: CreateMethod) => Promise<void> =
           this.createMethodMap[elementType];
-        createMethod({ color, direction, candidateId, row, column });
+        await createMethod({ color, direction, candidateId, row, column });
       }
     }
   }
 
-  // TODO: FINISH THIS Once we have access to the api again
-  //   async wipeMap(candidateId: string): Promise<void> {
-  //     const currentMap = await this.cosmosRepository.getCurrentMap({
-  //       candidateId,
-  //     });
+  async wipeMap(candidateId: string): Promise<void> {
+    // TODO: FINISH THIS Once we have access to the api again
+    const currentMap = await this.cosmosRepository.getCurrentMap({
+      candidateId,
+    });
 
-  //     for (const [row, value] of Object.entries(currentMap.map.content)) {
-  //       for (const [column, value2] of Object.entries(value)) {
-  //         if (value2 !== null) {
-  //           const { elementType } = ElementMappper[value2]; // IT IS NOT POSSIBLE TO CHECK THIS WITHOUT ACCESS
-  //           // ANYWAY ANY PLANET IS ERASABLE BY THE SAME ENDPOINT
-  //           const eraseMethod = this.eraseMethodMap[elementType];
-  //           eraseMethod({ candidateId, row, column });
-  //         }
-  //       }
-  //     }
-  //   }
+    for (const [row, value] of Object.entries(currentMap.map.content)) {
+      for (const [column, value2] of Object.entries(value)) {
+        if (value2 !== null) {
+          const { elementType } = ElementMappper[value2 as any]; // IT IS NOT POSSIBLE TO CHECK THIS WITHOUT ACCESS
+          // ANYWAY ANY PLANET IS ERASABLE BY THE SAME ENDPOINT
+          const eraseMethod = this.eraseMethodMap[elementType];
+          eraseMethod({ candidateId, row, column });
+        }
+      }
+    }
+  }
 }

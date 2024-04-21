@@ -7,6 +7,6 @@ import { MegaversesRepository } from './repositories/megaverses.repository';
 @Module({
   imports: [CoreModule],
   controllers: [MegaverseController],
-  providers: [CoreModule, MegaversesRepository, MegaversesService],
+  providers: [MegaversesRepository, MegaversesService],
 })
 export class MegaversesModule {}

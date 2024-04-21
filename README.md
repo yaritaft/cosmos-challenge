@@ -8,6 +8,7 @@
 - Explain strategy thing and interface segregation
 - Explain retry library + why exponential and why not promise all
 - Explain clean arch and strategy
+- Explain squash PR to fix history from coverage files accidentally introduced on the repo
 - Secure note
 - Setup env vars on deployment server and secure note for api key
 
