@@ -1,8 +1,6 @@
 - DEPLOY SOLUTION
 - PRE COMMIT
 - FINISH README
-- TRAVIS
-- COVERALLS
 
 # Megaverse challenge
 
