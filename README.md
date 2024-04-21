@@ -45,7 +45,6 @@ Yari Ivan Taft
 - [PreRequisites](#Pre-requisites)
 - [Run APP](#Run-APP)
 - [Run tests](#Run-tests)
-- [Deployment](#Deployment)
 
 ## Technology
 
@@ -94,13 +93,6 @@ Being at the same point before last step type:
 chmod 777 ./up_test.sh
 ./up_test.sh
 ```
-
-### Deployment
-
-There is a build in a remote environment in Travis. That platform checks that
-the build is valid and that none of the tests are failing. If everything is
-okay, then the code coverage is sent to coveralls and in that site the test
-coverage can be reviewed in detail.
 
 ### Things to improve
 
