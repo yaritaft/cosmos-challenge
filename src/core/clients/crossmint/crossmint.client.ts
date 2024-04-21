@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { crossmintAPI as crossmintAPIConfig } from 'config';
+import { crossmintAPI as crossmintAPIConfig, maxRetries } from 'config';
 import { firstValueFrom } from 'rxjs';
 import { CreateComethRequest } from './dtos/createCometh.dto';
 import { CreateSoloonRequest } from './dtos/createSoloon.dto';
@@ -28,7 +28,7 @@ export class CrossmintClient {
     try {
       return await request(args);
     } catch (error) {
-      if (error.response.status === 429 && counter < 10) {
+      if (error.response.status === 429 && counter < Number(maxRetries)) {
         await sleep(1000 * counter);
         console.info(`Attempt number: ${counter}`);
         return await this.retryRequest(request, args, counter + 1);

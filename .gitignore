@@ -4,6 +4,7 @@
 /build
 /coverage
 /coverage/**
+/venv
 
 # Logs
 logs

@@ -1,20 +1,27 @@
-- TESTING
-- Test it manually
 - DEPLOY SOLUTION
-
+- PRE COMMIT
+- DOCKER + DOCKERCOMPOSE
 - FINISH README
+- TRAVIS
+- COVERALLS
 
-- Explain refactoring constraints and how they were handled
-- Explain strategy thing and interface segregation
-- Explain retry library + why exponential and why not promise all
-- Explain clean arch and strategy
-- Explain squash PR to fix history from coverage files accidentally introduced on the repo
-- Secure note
-- Setup env vars on deployment server and secure note for api key
-
-# Cosmos challenge
+# Megaverse challenge
 
 You have to create an automatic way of creating megaverses and wipe them out. With given API and Candidate ID.
+
+### Decisions taken
+
+- Since I have lost access to the API after solving the challenge I had to create an API server to simulate responses. I will leave it inside the repo
+  under the name of json-server.py
+- I implemented an strategy design pattern for abstracting the specific strategy behind each element while creating or erasing. This allows to reuse code and use polymorphic strategies.
+  It is also easy to add more strategies without changing the core code.
+- Created a core module to split outside communication from the app domain.
+- Used clean architecture by splitting outside communication from app domain. And the app domains is splitted into controller, service, repository and client.
+- Since the API usually throws 429 to many requests a retrial strategy was applied. It increments the amount of time waited in each try.
+- The code to fix the excersice was basically done to check the core logic. Then the rest of the logic was made based on that logic and with a json server due to the lack of access of the api.
+- A squash commit was made to fix the history since some html files were accidentally added from code coverage inside a commit.
+- API key was applied to the app to improve security.
+- Env vars were handled with `config` library.
 
 ### Features
 
@@ -97,3 +104,18 @@ There is a build in a remote environment in Travis. That platform checks that
 the build is valid and that none of the tests are failing. If everything is
 okay, then the code coverage is sent to coveralls and in that site the test
 coverage can be reviewed in detail.
+
+### Things to improve
+
+The retrials were possible to test manually but due to JEST constraints I wasn't able to test it automatically.
+Did a deep research to find out this.
+
+### Run the JSON Server for manual testing
+
+```
+pip install virtualenv
+python -m virtualenv -p python3 venv
+source venv/bin/activate
+pip install -r requirements.txt
+python json-server.py
+```

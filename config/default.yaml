@@ -4,3 +4,5 @@ apiKey: 'yaridefault'
 
 crossmintAPI:
   baseUrl: ''
+
+maxRetries: 7
