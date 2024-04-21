@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  api:
+    command: >
+      sh -c "npm start"
+    ports:
+      - '3000:3000'
+    environment:
+      API_KEY: yaridefault
+      APP_ENV: dev
+      PORT: 3000
+      CROSSMINT_URL: https://challenge.crossmint.io/api

@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  api:
+    command: >
+      sh -c "npm run test:cov"
+    environment:
+      API_KEY: yaridefault
+      APP_ENV: testing
+      PORT: 3030
+      CROSSMINT_URL: localhost

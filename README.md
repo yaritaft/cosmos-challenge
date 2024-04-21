@@ -1,6 +1,5 @@
 - DEPLOY SOLUTION
 - PRE COMMIT
-- DOCKER + DOCKERCOMPOSE
 - FINISH README
 - TRAVIS
 - COVERALLS
@@ -111,6 +110,8 @@ The retrials were possible to test manually but due to JEST constraints I wasn't
 Did a deep research to find out this.
 
 ### Run the JSON Server for manual testing
+
+#### Manually
 
 ```
 pip install virtualenv
