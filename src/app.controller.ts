@@ -10,6 +10,11 @@ export class AppController {
     return this.appService.solveMapPoly();
   }
 
+  @Post('/a')
+  solveMapPoly2(): Promise<void> {
+    return this.appService.testCosa();
+  }
+
   @Delete()
   wipeMapPoly(): Promise<void> {
     return this.appService.wipeMapPoly();

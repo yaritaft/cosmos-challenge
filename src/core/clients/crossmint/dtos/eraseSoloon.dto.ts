@@ -1,3 +1,3 @@
-import { EraseBaseEleemntRequest } from './baseEraseElement.dto';
+import { EraseBaseElementRequest } from './baseEraseElement.dto';
 
-export class EraseSoloonRequest extends EraseBaseEleemntRequest {}
+export class EraseSoloonRequest extends EraseBaseElementRequest {}

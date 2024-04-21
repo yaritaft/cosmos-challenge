@@ -13,6 +13,7 @@ import {
   GetCurrentMapRequest,
   GetCurrentMapResponse,
 } from './dtos/getCurrentMap.dto';
+import { setTimeout as sleep } from 'node:timers/promises';
 
 const handleError = (error: any) => {
   throw error;
@@ -23,44 +24,43 @@ export class CrossmintClient {
   private baseUrl: string = crossmintAPIConfig.baseUrl;
   constructor(private readonly httpService: HttpService) {}
 
-  async createPolyanet(createPolyanetRequest: CreatePolyanetRequest) {
+  private async retryRequest(request, args, counter): Promise<void> {
     try {
-      const call$ = this.httpService.post<void>(
-        `${this.baseUrl}/polyanets`,
-        createPolyanetRequest,
-      );
-
-      const { data } = await firstValueFrom(call$);
-      return data;
+      return await request(args);
     } catch (error) {
-      handleError(error);
+      if (error.response.status === 429 && counter < 10) {
+        await sleep(1000 * counter);
+        console.info(`Attempt number: ${counter}`);
+        return await this.retryRequest(request, args, counter + 1);
+      } else {
+        throw error;
+      }
     }
+  }
+
+  async createPolyanet(createPolyanetRequest: CreatePolyanetRequest) {
+    const call$ = this.httpService.post<void>(
+      `${this.baseUrl}/polyanets`,
+      createPolyanetRequest,
+    );
+
+    return await this.retryRequest(firstValueFrom, call$, 0);
   }
 
   async createCometh(createComethRequest: CreateComethRequest) {
-    try {
-      const call$ = this.httpService.post<void>(
-        `${this.baseUrl}/comeths`,
-        createComethRequest,
-      );
-      const { data } = await firstValueFrom(call$);
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
+    const call$ = this.httpService.post<void>(
+      `${this.baseUrl}/comeths`,
+      createComethRequest,
+    );
+    return await this.retryRequest(firstValueFrom, call$, 0);
   }
 
   async createSoloon(createSoloonRequest: CreateSoloonRequest) {
-    try {
-      const call$ = this.httpService.post<void>(
-        `${this.baseUrl}/soloons`,
-        createSoloonRequest,
-      );
-      const { data } = await firstValueFrom(call$);
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
+    const call$ = this.httpService.post<void>(
+      `${this.baseUrl}/soloons`,
+      createSoloonRequest,
+    );
+    return await this.retryRequest(firstValueFrom, call$, 0);
   }
 
   async erasePolyanets(erasePolyanetRequest: ErasePolyanetRequest) {
@@ -117,7 +117,7 @@ export class CrossmintClient {
   async getGoal(getGoalMapRequest: GetGoalMapRequest) {
     try {
       const call$ = this.httpService.get<GetGoalMapResponse>(
-        `${this.baseUrl}/map/${getGoalMapRequest.candidateId}/goal,`,
+        `${this.baseUrl}/map/${getGoalMapRequest.candidateId}/goal`,
       );
       const response = await firstValueFrom(call$);
       return response.data;

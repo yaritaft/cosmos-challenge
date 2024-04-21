@@ -1,5 +1,5 @@
-export class EraseBaseEleemntRequest {
+export class EraseBaseElementRequest {
   candidateId: string;
-  row: number;
-  column: number;
+  row: string;
+  column: string;
 }

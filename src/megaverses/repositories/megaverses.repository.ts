@@ -1,16 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CrossmintClient } from '../../core/clients/crossmint/crossmint.client';
-import { EraseSoloonRequest } from '../../core/clients/crossmint/dtos/eraseSoloon.dto';
-import { EraseComethRequest } from '../../core/clients/crossmint/dtos/eraseCometh.dto';
-import { ErasePolyanetRequest } from '../../core/clients/crossmint/dtos/erasePolyanet.dto';
-import {
-  CreateSoloonRequest,
-  CrossmintColor,
-} from '../../core/clients/crossmint/dtos/createSoloon.dto';
-import {
-  CreateComethRequest,
-  CrossmintDirection,
-} from '../../core/clients/crossmint/dtos/createCometh.dto';
 import {
   GetCurrentMapRequest,
   GetCurrentMapResponse,
@@ -20,19 +9,21 @@ import {
   GetGoalMapResponse,
   ValidElement,
 } from '../../core/clients/crossmint/dtos/getGoalMap.dto';
-import { CreatePolyanetRequest } from '../../core/clients/crossmint/dtos/createPolyanet.dto';
 import { ElementType } from '../../core/clients/crossmint/dtos/elementType.type';
 import { ElementMappper } from '../mappers/megaverses.mapper';
+import { SoloonsStrategy } from './soloon.strategy';
+import { BaseElementStrategy } from './base.strategy';
+import { ComethsStrategy } from './cometh.strategy';
+import { PolyametsStrategy } from './polyanet.strategy';
 
-interface CreateMethod {
+interface CreateElementRequest {
   row: string;
   column: string;
   candidateId: string;
-  color?: CrossmintColor;
-  direction?: CrossmintDirection;
+  element: ValidElement;
 }
 
-interface CreateElement {
+interface EraseElementRequest {
   row: string;
   column: string;
   candidateId: string;
@@ -43,80 +34,32 @@ interface CreateElement {
 export class MegaversesRepository {
   constructor(private readonly crossmintClient: CrossmintClient) {}
 
-  eraseMethodMap: Record<ElementType, ({}) => Promise<void> | undefined> = {
-    [ElementType.COMETH]: this.createCometh,
-    [ElementType.POLYANET]: this.createPolyanet,
-    [ElementType.SOLOON]: this.createSoloon,
+  strategyMapper: Record<ElementType, BaseElementStrategy | undefined> = {
+    [ElementType.COMETH]: new ComethsStrategy(this.crossmintClient),
+    [ElementType.POLYANET]: new PolyametsStrategy(this.crossmintClient),
+    [ElementType.SOLOON]: new SoloonsStrategy(this.crossmintClient),
     [ElementType.SPACE]: undefined,
   };
 
-  async createElement({
-    element,
-    candidateId,
-    row,
-    column,
-  }: CreateElement): Promise<void> {
-    const { elementType, color, direction } = ElementMappper[element];
-    switch (elementType) {
-      case ElementType.POLYANET:
-        this.createPolyanet({
-          candidateId,
-          row,
-          column,
-        });
-        break;
-      case ElementType.COMETH:
-        await this.createCometh({
-          direction,
-          candidateId,
-          row,
-          column,
-        });
-        break;
-      case ElementType.SOLOON:
-        await this.createSoloon({
-          color,
-          candidateId,
-          row,
-          column,
-        });
-        break;
-      case ElementType.SPACE:
-        break;
+  createElement(createElementRequest: CreateElementRequest): Promise<void> {
+    const { element, ...commonFields } = createElementRequest;
+    const { elementType, ...elementParmas } = ElementMappper[element];
+    const strategy = this.strategyMapper[elementType];
+    if (!strategy) {
+      return;
     }
-    // TODO: EXPLAIN THAT DOING THIS WITH AD ICT IS NOT POSSIBLE DUE TO TESTING PURPOSES
+    return strategy.create({ ...elementParmas, ...commonFields });
   }
 
-  createPolyanet(createPolyanetRequest: CreateMethod): Promise<void> {
-    return this.crossmintClient.createPolyanet(createPolyanetRequest);
+  eraseElement(eraseElementRequest: EraseElementRequest): Promise<void> {
+    const { element, ...commonFields } = eraseElementRequest;
+    const { elementType, ...elementParmas } = ElementMappper[element];
+    const strategy = this.strategyMapper[elementType];
+    return strategy.erase({ ...elementParmas, ...commonFields });
   }
 
   getGoal(getGoalMapRequest: GetGoalMapRequest): Promise<GetGoalMapResponse> {
     return this.crossmintClient.getGoal(getGoalMapRequest);
-  }
-
-  createCometh(createComethRequest: CreateMethod): Promise<void> {
-    return this.crossmintClient.createCometh(
-      createComethRequest as CreateComethRequest,
-    );
-  }
-
-  createSoloon(createSoloonRequest: CreateMethod): Promise<void> {
-    return this.crossmintClient.createSoloon(
-      createSoloonRequest as CreateSoloonRequest,
-    );
-  }
-
-  erasePolyanets(erasePolyanetRequest: ErasePolyanetRequest): Promise<void> {
-    return this.crossmintClient.erasePolyanets(erasePolyanetRequest);
-  }
-
-  eraseCometh(eraseComethRequest: EraseComethRequest): Promise<void> {
-    return this.crossmintClient.eraseCometh(eraseComethRequest);
-  }
-
-  eraseSoloon(eraseSoloonRequest: EraseSoloonRequest): Promise<void> {
-    return this.crossmintClient.eraseSoloon(eraseSoloonRequest);
   }
 
   getCurrentMap(

@@ -1,15 +1,7 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Delete,
-  UseGuards,
-  Version,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Version } from '@nestjs/common';
 import { MegaversesService } from '../services/megaverses.service';
 import { SolveMapRequest } from '../dtos/solveMap.dto';
 import { ApiTags, ApiOperation, ApiBasicAuth } from '@nestjs/swagger';
-import { WipeMapRequest } from '../dtos/wipeMap.dto';
 import { ApiKeyGuard } from '../../authGuard';
 
 @Controller('/megaverses')

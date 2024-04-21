@@ -1,5 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { crossmintAPI as crossmintAPIConfig } from 'config';
 
 @Injectable()
 export class AppService {
@@ -45,6 +46,46 @@ export class AppService {
         } catch (error) {
           console.log(error);
         }
+      }
+    }
+  }
+
+  async testCosa(): Promise<void> {
+    const candidateId = '3b2e6a67-9043-48e0-9fd8-3fe7cbe04962';
+    const urlGoal = `http://127.0.0.1:5000/map/${candidateId}/goal`;
+
+    const baseUrl = 'http://127.0.0.1:5000';
+
+    const urlsParams = {
+      POLYANET: { url: '/polyanets' },
+      RED_SOLOON: { color: 'red', url: '/soloons' },
+      BLUE_SOLOON: { color: 'blue', url: '/soloons' },
+      PURPLE_SOLOON: { color: 'purple', url: '/soloons' },
+      WHITE_SOLOON: { color: 'white', url: '/soloons' },
+      DOWN_COMETH: { direction: 'down', url: '/comeths' },
+      UP_COMETH: { direction: 'up', url: '/comeths' },
+      LEFT_COMETH: { direction: 'left', url: '/comeths' },
+      RIGHT_COMETH: { direction: 'right', url: '/comeths' },
+    };
+
+    const goalMatrix = await this.httpService.get(urlGoal).toPromise();
+
+    for (const [row, value] of Object.entries(goalMatrix.data.goal)) {
+      for (const [column, value2] of Object.entries(value)) {
+        if (value2 === 'SPACE') {
+          continue;
+        }
+
+        const { url, color, direction } = urlsParams[value2];
+        await this.httpService
+          .post(`${baseUrl}${url}`, {
+            candidateId,
+            row,
+            column,
+            color,
+            direction,
+          })
+          .toPromise();
       }
     }
   }
