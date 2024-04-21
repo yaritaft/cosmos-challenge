@@ -8,6 +8,10 @@
 
 You have to create an automatic way of creating megaverses and wipe them out. With given API and Candidate ID.
 
+### Badges
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/main)
+
 ### Decisions taken
 
 - Since I have lost access to the API after solving the challenge I had to create an API server to simulate responses. I will leave it inside the repo
