@@ -12,7 +12,7 @@ On Heroku it also creates and deletes elements properly but the response is 503 
 
 That's the reason why it is done one by one with the retry. It is slow but It is working fine.
 
-Things that can be done to improve the speed and user experience:
+#### Things that can be done to improve the speed and user experience:
 
 1. We can always answer 201 and process it in an asynchronous way. After processing we can send and email or push notification to notify the user the result of the process. This can be done by using NATS internally or Kafka. In that way it is possible to automatically handle retries and ensure that every single message is properly processed.
    (I think this is one the best options)
@@ -20,10 +20,10 @@ Things that can be done to improve the speed and user experience:
 
 2. We can do this with websockets to keep the connection alive until we finish processing.
 
-3. If we are able we can improve the Crossmint API, it would be better to create a "Bulk create" and "Bulk delete". In that way we can send a list and make it way faster without having to handle too mnay request.
+3. If we are able, we can improve the Crossmint API, it would be better to create a "Bulk create" and "Bulk delete". In that way we can send a list and make it way faster without having to handle too mnay request.
    (I think this is another great option if we are able to do it)
 
-4. If we are able we can improve the Crossmint API, we can add support for multiple requests at the same time with more API instances or threads for example.
+4. If we are able, we can improve the Crossmint API, we can add support for multiple requests at the same time with more API instances or threads for example.
 
 ### Badges
 
@@ -33,6 +33,7 @@ Things that can be done to improve the speed and user experience:
 ### Decisions taken
 
 - I implemented an strategy design pattern for abstracting the specific strategy behind each element while creating or erasing. This allows to reuse code and use polymorphic strategies. It is also easy to add more strategies without changing the core code.
+- Service and Repository were created to split business logic from storage (Even when the storage is another API)
 - Created a core module to split outside communication from the app domain.
 - Used clean architecture by splitting outside communication from app domain. And the app domains is splitted into controller, service, repository and client. This makes the application easy to extend and modify without having to affect further functionalities.
 - Since the API usually throws 429 to many requests a retrial strategy was applied. It increments the amount of time waited in each try.
