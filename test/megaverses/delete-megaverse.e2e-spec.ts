@@ -54,11 +54,12 @@ describe('Create Megaverses (e2e)', () => {
     });
 
     it('201: / (DELETE) Succesfully create a megaverse with multiple elements', async () => {
-      // RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
-      // Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
-      // [P S S ]
-      // [S RC S ]
-      // [S S PSO ]
+      /* RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
+      Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
+      [P S S ]
+      [S RC S ]
+      [S S PSO ]
+      */
 
       const response = {
         data: {

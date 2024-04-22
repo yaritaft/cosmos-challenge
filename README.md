@@ -1,7 +1,3 @@
-- DEPLOY SOLUTION
-- PRE COMMIT
-- FINISH README
-
 # Megaverse challenge
 
 You have to create an automatic way of creating megaverses and wipe them out. With given API and Candidate ID.
@@ -10,10 +6,6 @@ You have to create an automatic way of creating megaverses and wipe them out. Wi
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/yaritaft/cosmos-challenge/badge.png?branch=master)](https://coveralls.io/github/yaritaft/cosmos-challenge?branch=master)
-
-### Important warning
-
-Since I have lost access to the API after solving the challenge I had to create an API server to simulate responses. I will leave it in another repo attached in the email. If the deletion simulation is not properly typed, it can be fixed if I get another candidate id to continue testing the API.
 
 ### Decisions taken
 
@@ -64,17 +56,17 @@ Yari Ivan Taft
 - Docker and docker compose installed.
 - Linux/Mac terminal (Or emulated linux on Windows)
 - No services running on localhost port 3000.
-- API Key:
+- API Key
 
 ## How to get the API KEY
 
 1. Go here https://www.devglan.com/online-tools/text-encryption-decryption
 2. Paste the encrypted password given on the email on the `Text to Decrypt` text box.
-3. Check Decryption rquires a custom secret key
+3. Check Decryption requires a custom secret key
 4. Paste the candidate id
 5. Copy the Decrypted text and use that as API KEY on swagger. (By clicking the lock on the top right corner)
 
-### Run APP
+### Run APP with Docker
 
 1. Execute script to run the app.
 
@@ -83,11 +75,11 @@ chmod 777 ./up_dev.sh
 ./up_dev.sh
 ```
 
-2. Go to the swagger and test the app or consume api through curl or postman.
+2. Go to the swagger http://localhost:3000/api and test the app or consume api through curl or postman with default api key: `defaultApiKey`
 
 3. Press Control + C to stop the app.
 
-### Run tests
+### Run tests with Docker
 
 Being at the same point before last step type:
 

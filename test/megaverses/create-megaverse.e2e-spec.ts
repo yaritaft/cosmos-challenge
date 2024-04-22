@@ -53,20 +53,14 @@ describe('Create Megaverses (e2e)', () => {
         .expect(500);
     });
 
-    // it('201: / (POST) With some 429 errors before getting 201 from External API to test retries.', () => {
-    //   return request(app.getHttpServer())
-    //     .get('/')
-    // .set({ 'api-key': apiKey })
-    //     .expect(200)
-    //     .expect('Hello World!');
-    // });
-
     it('201: / (POST) Succesfully create a megaverse with only one element', async () => {
-      // RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
-      // Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
-      // [S S S ]
-      // [S S S ]
-      // [S S PSO ]
+      /*
+      RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
+      Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
+      [S S S ]
+      [S S S ]
+      [S S PSO ]
+      */
 
       const response = {
         data: {
@@ -109,11 +103,12 @@ describe('Create Megaverses (e2e)', () => {
     });
 
     it('201: / (POST) Succesfully create a megaverse', async () => {
-      // RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
-      // Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
-      // [P S S ]
-      // [S RC S ]
-      // [S S PSO ]
+      /* RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
+      Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
+      [P S S ]
+      [S RC S ]
+      [S S PSO ]
+      */
 
       const response = {
         data: {
