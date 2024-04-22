@@ -32,15 +32,16 @@ Things that can be done to improve the speed and user experience:
 
 ### Decisions taken
 
-- I implemented an strategy design pattern for abstracting the specific strategy behind each element while creating or erasing. This allows to reuse code and use polymorphic strategies.
-  It is also easy to add more strategies without changing the core code.
+- I implemented an strategy design pattern for abstracting the specific strategy behind each element while creating or erasing. This allows to reuse code and use polymorphic strategies. It is also easy to add more strategies without changing the core code.
 - Created a core module to split outside communication from the app domain.
-- Used clean architecture by splitting outside communication from app domain. And the app domains is splitted into controller, service, repository and client.
+- Used clean architecture by splitting outside communication from app domain. And the app domains is splitted into controller, service, repository and client. This makes the application easy to extend and modify without having to affect further functionalities.
 - Since the API usually throws 429 to many requests a retrial strategy was applied. It increments the amount of time waited in each try.
-- The code to fix the excersice was basically done to check the core logic. Then the rest of the logic was made based on that logic and with a json server due to the lack of access of the api.
 - A squash commit was made to fix the history since some html files were accidentally added from code coverage inside a commit.
 - API key was applied to the app to improve security.
 - Env vars were handled with `config` library.
+- Docker was used to make the app more reproducible and easier to deploy in cloud providers.
+- Nest was chosen because it has a very nice approach to apply clean architecture out of the box by fostering dependency inversion principle with modules.
+- Typescript was used because static type checks help a lot by preventing some bugs.
 
 ### Features
 
