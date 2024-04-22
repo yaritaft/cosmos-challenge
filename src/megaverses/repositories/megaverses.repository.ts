@@ -57,10 +57,9 @@ export class MegaversesRepository {
 
   eraseElement(eraseElementRequest: EraseElementRequest): Promise<void> {
     const { currentElement, ...commonFields } = eraseElementRequest;
-    const { elementType, ...elementParmas } =
-      CurrentElementMappper[currentElement.type];
+    const { elementType } = CurrentElementMappper[currentElement.type];
     const strategy = this.strategyMapper[elementType];
-    return strategy.erase({ ...elementParmas, ...commonFields });
+    return strategy.erase(commonFields);
   }
 
   getGoal(getGoalMapRequest: GetGoalMapRequest): Promise<GetGoalMapResponse> {

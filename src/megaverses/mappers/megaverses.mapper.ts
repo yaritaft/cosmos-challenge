@@ -54,4 +54,10 @@ export const CurrentElementMappper: Record<number, ElementParams> = {
   0: {
     elementType: ElementType.POLYANET,
   },
+  1: {
+    elementType: ElementType.SOLOON,
+  },
+  2: {
+    elementType: ElementType.COMETH,
+  },
 };

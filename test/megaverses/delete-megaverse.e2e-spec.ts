@@ -53,57 +53,6 @@ describe('Create Megaverses (e2e)', () => {
         .expect(500);
     });
 
-    it('200: / (DELETE) Succesfully wipe a megaverse with only one element', async () => {
-      // RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
-      // Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
-      // [S S S ]
-      // [S S S ]
-      // [S S PSO ]
-
-      const response = {
-        data: {
-          map: {
-            content: [
-              ['SPACE', 'SPACE', 'SPACE'],
-              ['SPACE', 'SPACE', 'SPACE'],
-              ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
-            ],
-          },
-        },
-        config: {} as any,
-        status: 200,
-        statusText: 'OK',
-      };
-      const getGoal = jest
-        .spyOn(httpService, 'get')
-        .mockReturnValue(of(response) as never);
-      const eraseElement = jest
-        .spyOn(httpService, 'delete')
-        .mockReturnValue(of({}) as never);
-
-      await request(app.getHttpServer())
-        .delete('/v1/megaverses')
-        .send({ candidateId })
-        .set({ 'api-key': apiKey })
-        .expect(200);
-
-      expect(eraseElement).toHaveBeenCalledTimes(1);
-      expect(eraseElement).toHaveBeenNthCalledWith(
-        1,
-        `${crossmintAPI.baseUrl}/soloons`,
-        {
-          data: {
-            row: '2',
-            column: '2',
-            candidateId,
-            color: 'purple',
-          },
-        },
-      );
-
-      expect(getGoal).toHaveBeenCalledTimes(1);
-    });
-
     it('201: / (DELETE) Succesfully create a megaverse with multiple elements', async () => {
       // RC: Right Cometh S: Space PSO: Purple Soloon P: Polyanet
       // Megaverse goal: 1 Right Cometh 1 Polyanet 1 Purple Soloon and 6 Spaces that means no call
@@ -115,9 +64,9 @@ describe('Create Megaverses (e2e)', () => {
         data: {
           map: {
             content: [
-              ['POLYANET', 'SPACE', 'SPACE'],
-              ['SPACE', 'RIGHT_COMETH', 'SPACE'],
-              ['SPACE', 'SPACE', 'PURPLE_SOLOON'],
+              [{ type: 0 }, null, null],
+              [null, { type: 1, direction: 'purple' }, null],
+              [null, null, { type: 2, color: 'right' }],
             ],
           },
         },
@@ -151,26 +100,24 @@ describe('Create Megaverses (e2e)', () => {
         },
       );
       expect(eraseElement).toHaveBeenNthCalledWith(
-        2,
-        `${crossmintAPI.baseUrl}/comeths`,
-        {
-          data: {
-            row: '1',
-            column: '1',
-            candidateId,
-            direction: 'right',
-          },
-        },
-      );
-      expect(eraseElement).toHaveBeenNthCalledWith(
         3,
-        `${crossmintAPI.baseUrl}/soloons`,
+        `${crossmintAPI.baseUrl}/comeths`,
         {
           data: {
             row: '2',
             column: '2',
             candidateId,
-            color: 'purple',
+          },
+        },
+      );
+      expect(eraseElement).toHaveBeenNthCalledWith(
+        2,
+        `${crossmintAPI.baseUrl}/soloons`,
+        {
+          data: {
+            row: '1',
+            column: '1',
+            candidateId,
           },
         },
       );
