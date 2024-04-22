@@ -11,10 +11,12 @@ You have to create an automatic way of creating megaverses and wipe them out. Wi
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/yaritaft/cosmos-challenge/badge.png?branch=master)](https://coveralls.io/github/yaritaft/cosmos-challenge?branch=master)
 
+### Important warning
+
+Since I have lost access to the API after solving the challenge I had to create an API server to simulate responses. I will leave it in another repo attached in the email. If the deletion simulation is not properly typed, it can be fixed if I get another candidate id to continue testing the API.
+
 ### Decisions taken
 
-- Since I have lost access to the API after solving the challenge I had to create an API server to simulate responses. I will leave it inside the repo
-  under the name of json-server.py
 - I implemented an strategy design pattern for abstracting the specific strategy behind each element while creating or erasing. This allows to reuse code and use polymorphic strategies.
   It is also easy to add more strategies without changing the core code.
 - Created a core module to split outside communication from the app domain.

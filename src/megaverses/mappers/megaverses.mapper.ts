@@ -49,3 +49,9 @@ export const ElementMappper: Record<ValidElement, ElementParams> = {
     direction: CrossmintDirection.RIGHT,
   },
 };
+
+export const CurrentElementMappper: Record<number, ElementParams> = {
+  0: {
+    elementType: ElementType.POLYANET,
+  },
+};

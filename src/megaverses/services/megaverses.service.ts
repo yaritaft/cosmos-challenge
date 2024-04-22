@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MegaversesRepository } from '../repositories/megaverses.repository';
 import { ValidElement } from '../../core/clients/crossmint/dtos/getGoalMap.dto';
+import { CurrentElement } from '../../core/clients/crossmint/dtos/getCurrentMap.dto';
 
 @Injectable()
 export class MegaversesService {
@@ -31,14 +32,13 @@ export class MegaversesService {
     });
 
     for (const [row, value] of Object.entries(currentMatrix.map.content)) {
-      for (const [column, element] of Object.entries(value)) {
-        if ((element as ValidElement) === ValidElement.SPACE) {
-          // SINCE, I NO LONGER HAVE ACCESS TO THE API I ASSUME THE CELL LIKE THIS
+      for (const [column, currentElement] of Object.entries(value)) {
+        if (currentElement === null) {
           continue;
         }
 
         await this.cosmosRepository.eraseElement({
-          element: element as ValidElement,
+          currentElement: currentElement as CurrentElement,
           candidateId,
           row,
           column,

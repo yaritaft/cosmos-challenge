@@ -1,10 +1,12 @@
-import { ValidElement } from './getGoalMap.dto';
-
 export class GetCurrentMapRequest {
   candidateId: string;
 }
 
-type ElementSaved = ValidElement | null;
+export interface CurrentElement {
+  type: number;
+}
+
+type ElementSaved = CurrentElement | null;
 
 export class GetCurrentMapResponse {
   map: {

@@ -64,39 +64,24 @@ export class CrossmintClient {
   }
 
   async erasePolyanets(erasePolyanetRequest: ErasePolyanetRequest) {
-    try {
-      const call$ = this.httpService.delete<void>(`${this.baseUrl}/polyanets`, {
-        data: erasePolyanetRequest,
-      });
-      const { data } = await firstValueFrom(call$);
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
+    const call$ = this.httpService.delete<void>(`${this.baseUrl}/polyanets`, {
+      data: erasePolyanetRequest,
+    });
+    return await this.retryRequest(firstValueFrom, call$, 0);
   }
 
   async eraseCometh(eraseComethRequest: EraseComethRequest) {
-    try {
-      const call$ = this.httpService.delete<void>(`${this.baseUrl}/comeths`, {
-        data: eraseComethRequest,
-      });
-      const { data } = await firstValueFrom(call$);
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
+    const call$ = this.httpService.delete<void>(`${this.baseUrl}/comeths`, {
+      data: eraseComethRequest,
+    });
+    return await this.retryRequest(firstValueFrom, call$, 0);
   }
 
   async eraseSoloon(eraseSoloonRequest: EraseSoloonRequest) {
-    try {
-      const call$ = this.httpService.delete<void>(`${this.baseUrl}/soloons`, {
-        data: eraseSoloonRequest,
-      });
-      const { data } = await firstValueFrom(call$);
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
+    const call$ = this.httpService.delete<void>(`${this.baseUrl}/soloons`, {
+      data: eraseSoloonRequest,
+    });
+    return await this.retryRequest(firstValueFrom, call$, 0);
   }
 
   async getGoal(getGoalMapRequest: GetGoalMapRequest) {
@@ -116,7 +101,7 @@ export class CrossmintClient {
   ): Promise<GetCurrentMapResponse> {
     try {
       const call$ = this.httpService.get<GetCurrentMapResponse>(
-        `${this.baseUrl}/map/${getCurrentMapRequest.candidateId},`,
+        `${this.baseUrl}/map/${getCurrentMapRequest.candidateId}`,
       );
       const { data } = await firstValueFrom(call$);
       return data;

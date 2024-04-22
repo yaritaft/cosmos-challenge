@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CrossmintClient } from '../../core/clients/crossmint/crossmint.client';
 import {
+  CurrentElement,
   GetCurrentMapRequest,
   GetCurrentMapResponse,
 } from '../../core/clients/crossmint/dtos/getCurrentMap.dto';
@@ -10,11 +11,14 @@ import {
   ValidElement,
 } from '../../core/clients/crossmint/dtos/getGoalMap.dto';
 import { ElementType } from '../../core/clients/crossmint/dtos/elementType.type';
-import { ElementMappper } from '../mappers/megaverses.mapper';
+import {
+  CurrentElementMappper,
+  ElementMappper,
+} from '../mappers/megaverses.mapper';
 import { SoloonsStrategy } from './soloon.strategy';
 import { BaseElementStrategy } from './base.strategy';
 import { ComethsStrategy } from './cometh.strategy';
-import { PolyametsStrategy } from './polyanet.strategy';
+import { PolyanetsStrategy } from './polyanet.strategy';
 
 interface CreateElementRequest {
   row: string;
@@ -27,7 +31,7 @@ interface EraseElementRequest {
   row: string;
   column: string;
   candidateId: string;
-  element: ValidElement;
+  currentElement: CurrentElement;
 }
 
 @Injectable()
@@ -36,7 +40,7 @@ export class MegaversesRepository {
 
   strategyMapper: Record<ElementType, BaseElementStrategy | undefined> = {
     [ElementType.COMETH]: new ComethsStrategy(this.crossmintClient),
-    [ElementType.POLYANET]: new PolyametsStrategy(this.crossmintClient),
+    [ElementType.POLYANET]: new PolyanetsStrategy(this.crossmintClient),
     [ElementType.SOLOON]: new SoloonsStrategy(this.crossmintClient),
     [ElementType.SPACE]: undefined,
   };
@@ -52,8 +56,9 @@ export class MegaversesRepository {
   }
 
   eraseElement(eraseElementRequest: EraseElementRequest): Promise<void> {
-    const { element, ...commonFields } = eraseElementRequest;
-    const { elementType, ...elementParmas } = ElementMappper[element];
+    const { currentElement, ...commonFields } = eraseElementRequest;
+    const { elementType, ...elementParmas } =
+      CurrentElementMappper[currentElement.type];
     const strategy = this.strategyMapper[elementType];
     return strategy.erase({ ...elementParmas, ...commonFields });
   }

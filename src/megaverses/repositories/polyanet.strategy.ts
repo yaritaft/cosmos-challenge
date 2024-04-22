@@ -7,7 +7,7 @@ import {
 import { CreatePolyanetRequest } from '../../core/clients/crossmint/dtos/createPolyanet.dto';
 import { ErasePolyanetRequest } from '../../core/clients/crossmint/dtos/erasePolyanet.dto';
 
-export class PolyametsStrategy implements BaseElementStrategy {
+export class PolyanetsStrategy implements BaseElementStrategy {
   constructor(private readonly crossmintClient: CrossmintClient) {}
   create(createPolyanetRequest: CreateElement): Promise<void> {
     return this.crossmintClient.createPolyanet(
