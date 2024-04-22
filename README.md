@@ -2,6 +2,26 @@
 
 You have to create an automatic way of creating megaverses and wipe them out. With given API and Candidate ID.
 
+### Warning
+
+Locally it creates and deletes elements properly with a proper response.
+On Heroku it also creates and deletes elements properly but the response is 503 due to the speed of the API that we are calling. It keeps deleting or creating after response anyway. The max timeout value in heroku is 30 seconds.
+
+Tried to improve the speed with promise all with every request and also tried promise all with 5 elements chunks but It was even worse because more `too many multiple requests 429` were received. That's the reason it is done one by one with the retry. It is slow but It is working fine.
+
+Things that can be done with this:
+
+1. We can always answer 201 and process it in an asynchronous way. After processing we can send and email or push notification to notify the user the result of the process.
+   (I think this is one the best options)
+   There's some other apps that do this, like twitch downloading the streamed videos, american express with old statements, etc.
+
+2. We can do this with websockets to keep the connection alive until we finish processing.
+
+3. If we are able we can improve the Crossmint API, it would be better to create a "Bulk create" and "Bulk delete". In that way we can send a list and make it way faster without having to handle too mnay request.
+   (I think this is another great option if we are able to do it)
+
+4. If we are able we can improve the Crossmint API, we can add support for multiple requests at the same time with more API instances or threads for example.
+
 ### Badges
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/DVoiAwDzmMcvshPZnm3jCP/ASAErrsAbrCMQahxbmgeyR/tree/master)
@@ -90,8 +110,10 @@ chmod 777 ./up_test.sh
 
 ### Things to improve
 
-The retrials were possible to test manually but due to JEST constraints I wasn't able to test it automatically.
-Did a deep research to find out this.
+- The retrials were possible to test manually but due to JEST constraints I wasn't able to test it automatically.
+  Did a deep research to find out this.
+- On Heroku the max timeout response is 30 seconds. That's why you will get a 503 error. Although the elements will keep
+  being erased after you get the response. The endpoint does the task properly.
 
 ### Run the JSON Server for manual testing
 
