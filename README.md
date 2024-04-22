@@ -2,14 +2,17 @@
 
 You have to create an automatic way of creating megaverses and wipe them out. With given API and Candidate ID.
 
-### Warning
+### Heroku 503 Error Max Timeout Reached
 
 Locally it creates and deletes elements properly with a proper response.
 On Heroku it also creates and deletes elements properly but the response is 503 due to the speed of the API that we are calling. It keeps deleting or creating after response anyway. The max timeout value in heroku is 30 seconds.
 
-Tried to improve the speed with promise all with every request and also tried promise all with 5 elements chunks but It was even worse because more `too many multiple requests 429` were received. That's the reason it is done one by one with the retry. It is slow but It is working fine.
+- Tried to improve the speed with promise all with every request.
+- Also tried promise all with 5 and 10 elements chunks but It was even worse because more `too many multiple requests 429` were received.
 
-Things that can be done with this:
+That's the reason why it is done one by one with the retry. It is slow but It is working fine.
+
+Things that can be done to improve the speed and user experience:
 
 1. We can always answer 201 and process it in an asynchronous way. After processing we can send and email or push notification to notify the user the result of the process.
    (I think this is one the best options)
@@ -115,7 +118,9 @@ chmod 777 ./up_test.sh
 - On Heroku the max timeout response is 30 seconds. That's why you will get a 503 error. Although the elements will keep
   being erased after you get the response. The endpoint does the task properly.
 
-### Run the JSON Server for manual testing
+### Run the JSON Server for manual testing if you don't have access to the crossmint api
+
+JSON Server Repo: https://github.com/yaritaft/json-server
 
 #### Manually
 
