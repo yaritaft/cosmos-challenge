@@ -43,6 +43,7 @@ That's the reason why it is done one by one with the retry. It is slow but It is
 - Docker was used to make the app more reproducible and easier to deploy in cloud providers.
 - Nest was chosen because it has a very nice approach to apply clean architecture out of the box by fostering dependency inversion principle with modules.
 - Typescript was used because static type checks help a lot by preventing some bugs.
+- Used Heroku because it's easy to deploy quickly.
 
 ### Features
 
@@ -118,7 +119,7 @@ chmod 777 ./up_test.sh
 - The retrials were possible to test manually but due to JEST constraints I wasn't able to test it automatically.
   Did a deep research to find out this.
 - On Heroku the max timeout response is 30 seconds. That's why you will get a 503 error. Although the elements will keep
-  being erased after you get the response. The endpoint does the task properly.
+  being erased after you get the response. This can be tackled by taking the async approach mentioned above or by using another cloud provider with a longer http timeout. For example AWS would be a good option, EC2 service has up to 4000 seconds timeout.
 
 ### Run the JSON Server for manual testing if you don't have access to the crossmint api
 
