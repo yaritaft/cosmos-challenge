@@ -14,7 +14,7 @@ That's the reason why it is done one by one with the retry. It is slow but It is
 
 Things that can be done to improve the speed and user experience:
 
-1. We can always answer 201 and process it in an asynchronous way. After processing we can send and email or push notification to notify the user the result of the process.
+1. We can always answer 201 and process it in an asynchronous way. After processing we can send and email or push notification to notify the user the result of the process. This can be done by using NATS internally or Kafka. In that way it is possible to automatically handle retries and ensure that every single message is properly processed.
    (I think this is one the best options)
    There's some other apps that do this, like twitch downloading the streamed videos, american express with old statements, etc.
 
