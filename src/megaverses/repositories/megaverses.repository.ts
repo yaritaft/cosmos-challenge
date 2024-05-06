@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CrossmintClient } from '../../core/clients/crossmint/crossmint.client';
+import { ClientApiClient } from '../../core/clients/clientApi/clientApi.client';
 import {
   CurrentElement,
   GetCurrentMapRequest,
   GetCurrentMapResponse,
-} from '../../core/clients/crossmint/dtos/getCurrentMap.dto';
+} from '../../core/clients/clientApi/dtos/getCurrentMap.dto';
 import {
   GetGoalMapRequest,
   GetGoalMapResponse,
   ValidElement,
-} from '../../core/clients/crossmint/dtos/getGoalMap.dto';
-import { ElementType } from '../../core/clients/crossmint/dtos/elementType.type';
+} from '../../core/clients/clientApi/dtos/getGoalMap.dto';
+import { ElementType } from '../../core/clients/clientApi/dtos/elementType.type';
 import {
   CurrentElementMappper,
   ElementMappper,
@@ -36,12 +36,12 @@ interface EraseElementRequest {
 
 @Injectable()
 export class MegaversesRepository {
-  constructor(private readonly crossmintClient: CrossmintClient) {}
+  constructor(private readonly ClientApiClient: ClientApiClient) {}
 
   strategyMapper: Record<ElementType, BaseElementStrategy | undefined> = {
-    [ElementType.COMETH]: new ComethsStrategy(this.crossmintClient),
-    [ElementType.POLYANET]: new PolyanetsStrategy(this.crossmintClient),
-    [ElementType.SOLOON]: new SoloonsStrategy(this.crossmintClient),
+    [ElementType.COMETH]: new ComethsStrategy(this.ClientApiClient),
+    [ElementType.POLYANET]: new PolyanetsStrategy(this.ClientApiClient),
+    [ElementType.SOLOON]: new SoloonsStrategy(this.ClientApiClient),
     [ElementType.SPACE]: undefined,
   };
 
@@ -63,12 +63,12 @@ export class MegaversesRepository {
   }
 
   getGoal(getGoalMapRequest: GetGoalMapRequest): Promise<GetGoalMapResponse> {
-    return this.crossmintClient.getGoal(getGoalMapRequest);
+    return this.ClientApiClient.getGoal(getGoalMapRequest);
   }
 
   getCurrentMap(
     getCurrentMapRequest: GetCurrentMapRequest,
   ): Promise<GetCurrentMapResponse> {
-    return this.crossmintClient.getCurrentMap(getCurrentMapRequest);
+    return this.ClientApiClient.getCurrentMap(getCurrentMapRequest);
   }
 }

@@ -2,7 +2,7 @@
 
 apiKey: 'defaultApiKey'
 
-crossmintAPI:
+clientAPI:
   baseUrl: ''
 
 maxRetries: 7

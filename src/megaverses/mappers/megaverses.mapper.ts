@@ -1,12 +1,12 @@
-import { ElementType } from '../../core/clients/crossmint/dtos/elementType.type';
-import { CrossmintColor } from '../../core/clients/crossmint/dtos/createSoloon.dto';
-import { ValidElement } from 'src/core/clients/crossmint/dtos/getGoalMap.dto';
-import { CrossmintDirection } from '../../core/clients/crossmint/dtos/createCometh.dto';
+import { ElementType } from '../../core/clients/clientApi/dtos/elementType.type';
+import { ClientApiColor } from '../../core/clients/clientApi/dtos/createSoloon.dto';
+import { ValidElement } from 'src/core/clients/clientApi/dtos/getGoalMap.dto';
+import { ClientApiDirection } from '../../core/clients/clientApi/dtos/createCometh.dto';
 
 class ElementParams {
   elementType: ElementType;
-  color?: CrossmintColor;
-  direction?: CrossmintDirection;
+  color?: ClientApiColor;
+  direction?: ClientApiDirection;
 }
 
 export const ElementMappper: Record<ValidElement, ElementParams> = {
@@ -18,35 +18,35 @@ export const ElementMappper: Record<ValidElement, ElementParams> = {
   },
   RED_SOLOON: {
     elementType: ElementType.SOLOON,
-    color: CrossmintColor.RED,
+    color: ClientApiColor.RED,
   },
   BLUE_SOLOON: {
     elementType: ElementType.SOLOON,
-    color: CrossmintColor.BLUE,
+    color: ClientApiColor.BLUE,
   },
   PURPLE_SOLOON: {
     elementType: ElementType.SOLOON,
-    color: CrossmintColor.PURPLE,
+    color: ClientApiColor.PURPLE,
   },
   WHITE_SOLOON: {
     elementType: ElementType.SOLOON,
-    color: CrossmintColor.WHITE,
+    color: ClientApiColor.WHITE,
   },
   DOWN_COMETH: {
     elementType: ElementType.COMETH,
-    direction: CrossmintDirection.DOWN,
+    direction: ClientApiDirection.DOWN,
   },
   UP_COMETH: {
     elementType: ElementType.COMETH,
-    direction: CrossmintDirection.UP,
+    direction: ClientApiDirection.UP,
   },
   LEFT_COMETH: {
     elementType: ElementType.COMETH,
-    direction: CrossmintDirection.LEFT,
+    direction: ClientApiDirection.LEFT,
   },
   RIGHT_COMETH: {
     elementType: ElementType.COMETH,
-    direction: CrossmintDirection.RIGHT,
+    direction: ClientApiDirection.RIGHT,
   },
 };
 

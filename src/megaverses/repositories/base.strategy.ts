@@ -1,12 +1,12 @@
-import { CrossmintColor } from '../../core/clients/crossmint/dtos/createSoloon.dto';
-import { CrossmintDirection } from '../../core/clients/crossmint/dtos/createCometh.dto';
+import { ClientApiColor } from '../../core/clients/clientApi/dtos/createSoloon.dto';
+import { ClientApiDirection } from '../../core/clients/clientApi/dtos/createCometh.dto';
 
 export interface CreateElement {
   row: string;
   column: string;
   candidateId: string;
-  color?: CrossmintColor;
-  direction?: CrossmintDirection;
+  color?: ClientApiColor;
+  direction?: ClientApiDirection;
 }
 
 export interface EraseElement {

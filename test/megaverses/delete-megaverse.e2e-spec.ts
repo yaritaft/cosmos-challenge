@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { HttpMockBuilder } from '../helpers/http-mock.helper.test';
 import { HttpService } from '@nestjs/axios';
-import { apiKey, crossmintAPI } from 'config';
+import { apiKey, clientAPI } from 'config';
 import { of } from 'rxjs';
 import { AppMockHelper } from '../helpers/app-helper.test';
 
@@ -91,7 +91,7 @@ describe('Create Megaverses (e2e)', () => {
       expect(eraseElement).toHaveBeenCalledTimes(3);
       expect(eraseElement).toHaveBeenNthCalledWith(
         1,
-        `${crossmintAPI.baseUrl}/polyanets`,
+        `${clientAPI.baseUrl}/polyanets`,
         {
           data: {
             row: '0',
@@ -102,7 +102,7 @@ describe('Create Megaverses (e2e)', () => {
       );
       expect(eraseElement).toHaveBeenNthCalledWith(
         3,
-        `${crossmintAPI.baseUrl}/comeths`,
+        `${clientAPI.baseUrl}/comeths`,
         {
           data: {
             row: '2',
@@ -113,7 +113,7 @@ describe('Create Megaverses (e2e)', () => {
       );
       expect(eraseElement).toHaveBeenNthCalledWith(
         2,
-        `${crossmintAPI.baseUrl}/soloons`,
+        `${clientAPI.baseUrl}/soloons`,
         {
           data: {
             row: '1',

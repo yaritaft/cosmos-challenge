@@ -1,6 +1,6 @@
-import { CrossmintClient } from '../../core/clients/crossmint/crossmint.client';
-import { CreateSoloonRequest } from '../../core/clients/crossmint/dtos/createSoloon.dto';
-import { EraseSoloonRequest } from '../../core/clients/crossmint/dtos/eraseSoloon.dto';
+import { ClientApiClient } from '../../core/clients/clientApi/clientApi.client';
+import { CreateSoloonRequest } from '../../core/clients/clientApi/dtos/createSoloon.dto';
+import { EraseSoloonRequest } from '../../core/clients/clientApi/dtos/eraseSoloon.dto';
 import {
   BaseElementStrategy,
   CreateElement,
@@ -8,15 +8,15 @@ import {
 } from './base.strategy';
 
 export class SoloonsStrategy implements BaseElementStrategy {
-  constructor(private readonly crossmintClient: CrossmintClient) {}
+  constructor(private readonly ClientApiClient: ClientApiClient) {}
   create(createSoloonRequest: CreateElement): Promise<void> {
-    return this.crossmintClient.createSoloon(
+    return this.ClientApiClient.createSoloon(
       createSoloonRequest as CreateSoloonRequest,
     );
   }
 
   erase(eraseElementRequest: EraseElement): Promise<void> {
-    return this.crossmintClient.eraseSoloon(
+    return this.ClientApiClient.eraseSoloon(
       eraseElementRequest as EraseSoloonRequest,
     );
   }

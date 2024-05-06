@@ -1,6 +1,6 @@
 import { CreateBaseEleemntRequest } from './baseCreateElement.dto';
 
-export enum CrossmintDirection {
+export enum ClientApiDirection {
   UP = 'up',
   DOWN = 'down',
   RIGHT = 'right',
@@ -8,5 +8,5 @@ export enum CrossmintDirection {
 }
 
 export class CreateComethRequest extends CreateBaseEleemntRequest {
-  direction: CrossmintDirection;
+  direction: ClientApiDirection;
 }

@@ -10,4 +10,4 @@ services:
       API_KEY: yaridefault
       APP_ENV: dev
       PORT: 3000
-      CROSSMINT_URL: https://challenge.crossmint.io/api
+      CLIENT_URL: https://challenge.CLIENTNAME.io/api # fIX THIS URL

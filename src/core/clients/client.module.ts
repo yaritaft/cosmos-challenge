@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CrossmintClient } from './crossmint/crossmint.client';
+import { ClientApiClient } from './clientApi/clientApi.client';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [HttpModule],
-  providers: [CrossmintClient],
-  exports: [CrossmintClient],
+  providers: [ClientApiClient],
+  exports: [ClientApiClient],
 })
 export class ClientModule {}

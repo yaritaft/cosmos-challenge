@@ -1,22 +1,22 @@
-import { CrossmintClient } from '../../core/clients/crossmint/crossmint.client';
+import { ClientApiClient } from '../../core/clients/clientApi/clientApi.client';
 import {
   BaseElementStrategy,
   CreateElement,
   EraseElement,
 } from './base.strategy';
-import { CreateComethRequest } from '../../core/clients/crossmint/dtos/createCometh.dto';
-import { EraseComethRequest } from '../../core/clients/crossmint/dtos/eraseCometh.dto';
+import { CreateComethRequest } from '../../core/clients/clientApi/dtos/createCometh.dto';
+import { EraseComethRequest } from '../../core/clients/clientApi/dtos/eraseCometh.dto';
 
 export class ComethsStrategy implements BaseElementStrategy {
-  constructor(private readonly crossmintClient: CrossmintClient) {}
+  constructor(private readonly ClientApiClient: ClientApiClient) {}
   create(createComethRequest: CreateElement): Promise<void> {
-    return this.crossmintClient.createCometh(
+    return this.ClientApiClient.createCometh(
       createComethRequest as CreateComethRequest,
     );
   }
 
   erase(eraseElementRequest: EraseElement): Promise<void> {
-    return this.crossmintClient.eraseCometh(
+    return this.ClientApiClient.eraseCometh(
       eraseElementRequest as EraseComethRequest,
     );
   }

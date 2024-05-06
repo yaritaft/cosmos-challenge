@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MegaversesRepository } from '../repositories/megaverses.repository';
-import { ValidElement } from '../../core/clients/crossmint/dtos/getGoalMap.dto';
-import { CurrentElement } from '../../core/clients/crossmint/dtos/getCurrentMap.dto';
+import { ValidElement } from '../../core/clients/clientApi/dtos/getGoalMap.dto';
+import { CurrentElement } from '../../core/clients/clientApi/dtos/getCurrentMap.dto';
 
 @Injectable()
 export class MegaversesService {

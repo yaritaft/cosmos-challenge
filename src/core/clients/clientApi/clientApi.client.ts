@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { crossmintAPI as crossmintAPIConfig, maxRetries } from 'config';
+import { clientAPI as clientAPIConfig, maxRetries } from 'config';
 import { firstValueFrom } from 'rxjs';
 import { CreateComethRequest } from './dtos/createCometh.dto';
 import { CreateSoloonRequest } from './dtos/createSoloon.dto';
@@ -20,8 +20,8 @@ const handleError = (error: any) => {
 };
 
 @Injectable()
-export class CrossmintClient {
-  private baseUrl: string = crossmintAPIConfig.baseUrl;
+export class ClientApiClient {
+  private baseUrl: string = clientAPIConfig.baseUrl;
   constructor(private readonly httpService: HttpService) {}
 
   private async retryRequest(request, args, counter): Promise<void> {

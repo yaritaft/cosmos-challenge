@@ -1,6 +1,6 @@
 import { CreateBaseEleemntRequest } from './baseCreateElement.dto';
 
-export enum CrossmintColor {
+export enum ClientApiColor {
   WHITE = 'white',
   RED = 'red',
   PURPLE = 'purple',
@@ -8,5 +8,5 @@ export enum CrossmintColor {
 }
 
 export class CreateSoloonRequest extends CreateBaseEleemntRequest {
-  color: CrossmintColor;
+  color: ClientApiColor;
 }

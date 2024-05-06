@@ -8,4 +8,4 @@ services:
       API_KEY: yaridefault
       APP_ENV: testing
       PORT: 3030
-      CROSSMINT_URL: localhost
+      CLIENT_URL: localhost

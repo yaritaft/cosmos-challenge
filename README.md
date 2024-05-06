@@ -20,10 +20,10 @@ That's the reason why it is done one by one with the retry. It is slow but It is
 
 2. We can do this with websockets to keep the connection alive until we finish processing.
 
-3. If we are able, we can improve the Crossmint API, it would be better to create a "Bulk create" and "Bulk delete". In that way we can send a list and make it way faster without having to handle too mnay request.
+3. If we are able, we can improve the Client API, it would be better to create a "Bulk create" and "Bulk delete". In that way we can send a list and make it way faster without having to handle too mnay request.
    (I think this is another great option if we are able to do it)
 
-4. If we are able, we can improve the Crossmint API, we can add support for multiple requests at the same time with more API instances or threads for example.
+4. If we are able, we can improve the Client API, we can add support for multiple requests at the same time with more API instances or threads for example.
 
 ### Badges
 
@@ -121,7 +121,7 @@ chmod 777 ./up_test.sh
 - On Heroku the max timeout response is 30 seconds. That's why you will get a 503 error. Although the elements will keep
   being erased after you get the response. This can be tackled by taking the async approach mentioned above or by using another cloud provider with a longer http timeout. For example AWS would be a good option, EC2 service has up to 4000 seconds timeout.
 
-### Run the JSON Server for manual testing if you don't have access to the crossmint api
+### Run the JSON Server for manual testing if you don't have access to the Client api
 
 JSON Server Repo: https://github.com/yaritaft/json-server
 

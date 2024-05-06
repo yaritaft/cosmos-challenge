@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { HttpMockBuilder } from '../helpers/http-mock.helper.test';
 import { HttpService } from '@nestjs/axios';
-import { apiKey, crossmintAPI } from 'config';
+import { apiKey, clientAPI } from 'config';
 import { of } from 'rxjs';
 import { AppMockHelper } from '../helpers/app-helper.test';
 
@@ -90,7 +90,7 @@ describe('Create Megaverses (e2e)', () => {
       expect(createElement).toHaveBeenCalledTimes(1);
       expect(createElement).toHaveBeenNthCalledWith(
         1,
-        `${crossmintAPI.baseUrl}/soloons`,
+        `${clientAPI.baseUrl}/soloons`,
         {
           row: '2',
           column: '2',
@@ -138,7 +138,7 @@ describe('Create Megaverses (e2e)', () => {
       expect(createElement).toHaveBeenCalledTimes(3);
       expect(createElement).toHaveBeenNthCalledWith(
         1,
-        `${crossmintAPI.baseUrl}/polyanets`,
+        `${clientAPI.baseUrl}/polyanets`,
         {
           row: '0',
           column: '0',
@@ -147,7 +147,7 @@ describe('Create Megaverses (e2e)', () => {
       );
       expect(createElement).toHaveBeenNthCalledWith(
         2,
-        `${crossmintAPI.baseUrl}/comeths`,
+        `${clientAPI.baseUrl}/comeths`,
         {
           row: '1',
           column: '1',
@@ -157,7 +157,7 @@ describe('Create Megaverses (e2e)', () => {
       );
       expect(createElement).toHaveBeenNthCalledWith(
         3,
-        `${crossmintAPI.baseUrl}/soloons`,
+        `${clientAPI.baseUrl}/soloons`,
         {
           row: '2',
           column: '2',
